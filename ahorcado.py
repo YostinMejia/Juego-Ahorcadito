@@ -126,6 +126,7 @@ def Ganador(juego):
 #Al final del juego se puede escoger si desea volver a continuar o no
 again=""
 while again!="no":
+    
     modalidad=input("\nPara determinar la duración del juego: \n \t opcion #1-se puede pactar un número de rondas desde el principio \n \t opcion #2-Al final de cada ronda puede decidir si quiere continuar o terminar el juego \n\nDigite 1 para elegir la opcion#1 o 2 para elegir la opcion#2: ")
     n1=input("\nPrimero ingrese el nombre de quien desea comenzar adivinando: ")
     n2=input("Nombre del jugador #2: ")
@@ -155,16 +156,15 @@ while again!="no":
         while stop!="si":
             juego=Juego(n1,n2) 
             temp=Ganador(juego)
-            
-            #sumamos las rondas ganadas a cada jugador
-            jugador1[1]+=temp[0][1]
-            jugador1[2]+=temp[0][2]
-            #Sumamos los intentos a cada jugador
-            jugador2[1]+=temp[0][1]
-            jugador2[2]+=temp[0][2]
             partida+=1
+            #sumamos las rondas ganadas a cada jugador
+            jugador1[0]+=temp[0][0]
+            jugador2[0]+=temp[1][0]
+            #Sumamos los intentos a cada jugador
+            jugador1[1]+=temp[0][1]
+            jugador2[1]+=temp[1][1]
 
-            print(f"Han jugado {partida} partidas, {n1} lleva {jugador1[1]} partidas ganadas y {jugador1[2]} intentos fallidos mientras que {n2} lleva {jugador1[1]} partidas ganadas y {jugador2[2]} intentos fallidos  ")
+            print(f"Han jugado {partida} partidas, {n1} lleva {jugador1[0]} partidas ganadas y {jugador1[1]} intentos fallidos mientras que {n2} lleva {jugador2[0]} partidas ganadas y {jugador2[1]} intentos fallidos  ")
 
             stop=input("¿Desea detener el juego? \n ingrese si o no:").lower()
 
