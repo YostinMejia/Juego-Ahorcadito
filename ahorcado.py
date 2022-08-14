@@ -42,7 +42,12 @@ def Juego(n1,n2):
         print("\nSi desea ayuda esta pone una letra correcta de manera aleatoria, en el momento en el que le aparezca 'Digite la letra' ingrese 'ayuda' ")
 
         while intentos<7:
-            if intentos<6:
+
+            if descubrir==palabra:
+                print(player["nombre"],"Adivinaste")
+                player["ganadas"]+=1
+                break
+            elif intentos<6:
                 letra=input("\nDigite la letra: ").lower()
                 if letra!="ayuda":
                     #Si la letra esta en la palabra
@@ -62,13 +67,9 @@ def Juego(n1,n2):
                         archivo = open(f'./ahorcado#{intentos}.txt',"rt",encoding="utf-8")
                         print(archivo.read())
                         player["intentos"]+=1
-
-                    if descubrir==palabra:
-                        print(player["nombre"],"Adivinaste")
-                        player["ganadas"]+=1
-                        break
+                        
+                #Se activa la ayuda
                 else:
-                    #Se activa la ayuda
                     while True:
                         temp=list(descubrir)
                         r=random.randint(0,len(palabra)-1)
@@ -76,6 +77,7 @@ def Juego(n1,n2):
                             palabra=list(palabra)
                             temp[r]=palabra[r]
                             descubrir="".join(temp)
+                            palabra="".join(palabra)
                             print(descubrir)
                             break
                         else:
@@ -108,6 +110,7 @@ while again!="no":
 
         n1=input("\nPrimero ingrese el nombre de quien desea comenzar adivinando: ")
         n2=input("Nombre del jugador #2: ")
+        
 
         ganador1=[n1,0]
         ganador2=[n2,0]
@@ -130,6 +133,10 @@ while again!="no":
                 print(f"{ganador2[0].upper()} Es el ganador ")
         else:
             print(f"¡EMPATE!")
+
+
+
+
 
     elif modalidad=="2":
 
