@@ -7,21 +7,21 @@ print( " \t 1) Ninguna palabara puede exceder los 15 caracteres \n \t 2) En cada
 def Juego(n1,n2): 
 
     #Determinamos quien va primero
-    jugador1={"nombre":n1,"ganadas":0,"intentos":0,"correctos":0}
-    jugador2={"nombre":n2,"ganadas":0,"intentos":0,"correctos":0}
+    jugador1=[n1,0,0,0]
+    jugador2=[n2,0,0,0]
 
     #Cada ronda cuenta por 2 debido a que hay 2 jugadores
-    g=[]
+    ganador=[]
     for p in range(2):
 
         player=""
         #El jugador escoge la palabra para su adversario
         print()
         if p==0:
-            print(jugador2["nombre"],f"¿cual palabra quiere que ",jugador1["nombre"]," adivine?")
+            print(n2,f"¿cual palabra quiere que ",n1," adivine?")
             player=jugador1
         else:
-            print(jugador1["nombre"],f"¿cual palabra quiere que ",jugador2["nombre"]," adivine?")
+            print(n1,f"¿cual palabra quiere que ",n2," adivine?")
             player=jugador2
 
         #Ingresa la palabara con cantidad de caracteres especificos
@@ -44,8 +44,8 @@ def Juego(n1,n2):
         while intentos<7:
 
             if descubrir==palabra:
-                print(player["nombre"],"Adivinaste")
-                player["ganadas"]+=1
+                print(player[0],"Adivinaste")
+                player[1]+=1
                 break
             elif intentos<6:
                 letra=input("\nDigite la letra: ").lower()
@@ -59,15 +59,16 @@ def Juego(n1,n2):
                                 temp[j]=letra
                                 descubrir="".join(temp)
                                 print(descubrir)
-                        print("Lleva ",player["correctos"]+1,f"asiertos correctos y {intentos} fallados")
-                        player["correctos"]+=1
+                        print("Lleva ",player[3]+1,f"asiertos correctos y {intentos} fallados")
+                        player[3]+=1
+
                     else:
                         print(f" \n {letra} no está en la palabra \n Tiene {6-intentos} mas \n {descubrir}")
                         intentos+=1
                         archivo = open(f'./ahorcado#{intentos}.txt',"rt",encoding="utf-8")
                         print(archivo.read())
-                        player["intentos"]+=1
-                        
+                        player[2]+=1
+
                 #Se activa la ayuda
                 else:
                     while True:
@@ -83,87 +84,89 @@ def Juego(n1,n2):
                         else:
                             pass           
             else:
-                print(player["nombre"],f"Perdiste, la palabra era {palabra.upper()}")
+                print(player[0],f"Perdiste, la palabra era {palabra.upper()}")
                 break
         print()
 
-        #le agregamos a "g" el ganador para irlo sumando
-        if jugador1["ganadas"]!=jugador2["ganadas"]:
-            if jugador1["ganadas"]>jugador2["ganadas"]:
-                g.append("1")
+    if jugador1[2]<jugador2[2]:
+        ganador.append("1")
+    else:
+        ganador.append("2")
+    print("ganador",ganador)
+
+    return ganador,jugador1[2],jugador2[2]
+
+#ganador 
+def Ganador(juego):  
+        #0 nombre 1 rondas ganadas 2 intentos fallidos  
+        jugador1=[0,0]
+        jugador2=[0,0]
+        print("entrada de juego",juego)
+        for i in range(len(juego[0])):
+            if juego[0][i]=="1":
+                jugador1[0]+=1
             else:
-                g.append("2")
-        #si ambos ganaron se escoge el que tiene menos fallos 
+                jugador2[0]+=1
+
+        #Agrega los intentos a las listas que se retornan
+        jugador1[1]=juego[1]
+        jugador2[1]=juego[2]
+
+        #Ganador del juego
+        if jugador1[0] != jugador2[0]:
+            if jugador1[0]>jugador2[0]:
+                print(f"{n1.upper()} Es el ganador ")
+            else:
+                print(f"{n2.upper()} Es el ganador ")
         else:
-            if jugador1["intentos"]<jugador2["intentos"]:
-                g.append("1")
-            else:
-                g.append("2")
-    return g,jugador1["intentos"],jugador2["intentos"]
+            print(f"¡EMPATE!")
+
+        return jugador1,jugador2
 
 #Al final del juego se puede escoger si desea volver a continuar o no
 again=""
 while again!="no":
     modalidad=input("\nPara determinar la duración del juego: \n \t opcion #1-se puede pactar un número de rondas desde el principio \n \t opcion #2-Al final de cada ronda puede decidir si quiere continuar o terminar el juego \n\nDigite 1 para elegir la opcion#1 o 2 para elegir la opcion#2: ")
+    n1=input("\nPrimero ingrese el nombre de quien desea comenzar adivinando: ")
+    n2=input("Nombre del jugador #2: ")
+    jugador1=[0,0]
+    jugador2=[0,0]
+    partida=0
 
     if modalidad=="1":
-
-        n1=input("\nPrimero ingrese el nombre de quien desea comenzar adivinando: ")
-        n2=input("Nombre del jugador #2: ")
-        
-
-        ganador1=[n1,0]
-        ganador2=[n2,0]
 
         #Ejecutamos las rondas ingresadas por el cliente
         for i in range(int(input("\nDigite el numero de rondas que desean jugar: "))):
             juego=Juego(n1,n2)
-            for i in range(2):
-                if juego[i]=="1":
-                    ganador1[1]+=1
-                else:
-                    ganador2[1]+=1
+            temp=Ganador(juego)
+            partida+=1
+            #sumamos las rondas ganadas a cada jugador
+            jugador1[0]+=temp[0][0]
+            jugador2[0]+=temp[1][0]
+            #Sumamos los intentos a cada jugador
+            jugador1[1]+=temp[0][1]
+            jugador2[1]+=temp[1][1]
 
-
-        #Ganador del juego
-        if ganador1[1] != ganador2[1]:
-            if ganador1[1]>ganador2[1]:
-                print(f"{ganador1[0].upper()} Es el ganador ")
-            else:
-                print(f"{ganador2[0].upper()} Es el ganador ")
-        else:
-            print(f"¡EMPATE!")
-
-
-
-
+            print(f"Han jugado {partida} partidas, {n1} lleva {jugador1[0]} partidas ganadas y {jugador1[1]} intentos fallidos mientras que {n2} lleva {jugador2[0]} partidas ganadas y {jugador2[1]} intentos fallidos  ")
 
     elif modalidad=="2":
-
-        n1=input("\nPrimero ingrese el nombre de quien desea comenzar adivinando: ")
-        n2=input("Nombre del jugador #2: ")
-
-        ganador1=[n1,0]
-        ganador2=[n2,0]
 
         stop=""
         while stop!="si":
             juego=Juego(n1,n2) 
-            for i in range(2):
-                if juego[i]=="1":
-                    ganador1[1]+=1
-                else:
-                    ganador2[1]+=1
-            stop=input("¿Desea detener el juego? \n ingrese si o no:").lower()
+            temp=Ganador(juego)
+            
+            #sumamos las rondas ganadas a cada jugador
+            jugador1[1]+=temp[0][1]
+            jugador1[2]+=temp[0][2]
+            #Sumamos los intentos a cada jugador
+            jugador2[1]+=temp[0][1]
+            jugador2[2]+=temp[0][2]
+            partida+=1
 
-        #Ganador del juego
-        if ganador1[1]!=ganador2[1]:
-            if ganador1[1]>ganador2[1]:
-                print(f"{ganador1[0].upper()} Es el ganador ")
-            else:
-                print(f"{ganador2[0].upper()} Es el ganador ")
-        else:
-            print(f"¡EMPATE!")
+            print(f"Han jugado {partida} partidas, {n1} lleva {jugador1[1]} partidas ganadas y {jugador1[2]} intentos fallidos mientras que {n2} lleva {jugador1[1]} partidas ganadas y {jugador2[2]} intentos fallidos  ")
+
+            stop=input("¿Desea detener el juego? \n ingrese si o no:").lower()
 
     else:
         print("Deje de ser bobo y digite una opcion valida")
