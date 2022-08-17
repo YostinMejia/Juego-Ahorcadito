@@ -39,7 +39,7 @@ def Juego(n1,n2):
         #Empiezan los intentos
         intentos=0
         print("Comience a adivinar, ¡Buena suerte!")
-        print("\nSi desea ayuda esta pone una letra correcta de manera aleatoria, en el momento en el que le aparezca 'Digite la letra' ingrese 'ayuda' ")
+        print("\nSi desea ayuda, esta consiste en que el juego pone una letra correcta de manera aleatoria, en el momento en el que le aparezca 'Digite la letra' ingrese 'ayuda' ")
 
         while intentos<7:
 
@@ -63,9 +63,9 @@ def Juego(n1,n2):
                         player[3]+=1
 
                     else:
-                        print(f" \n {letra} no está en la palabra \n Tiene {6-intentos} mas \n {descubrir}")
                         intentos+=1
                         archivo = open(f'./ahorcado#{intentos}.txt',"rt",encoding="utf-8")
+                        print(f" \n {letra} no está en la palabra \n Tiene {6-intentos} mas \n {descubrir}")
                         print(archivo.read())
                         player[2]+=1
 
@@ -92,7 +92,6 @@ def Juego(n1,n2):
         ganador.append("1")
     else:
         ganador.append("2")
-    print("ganador",ganador)
 
     return ganador,jugador1[2],jugador2[2]
 
@@ -101,7 +100,6 @@ def Ganador(juego):
         #0 nombre 1 rondas ganadas 2 intentos fallidos  
         jugador1=[0,0]
         jugador2=[0,0]
-        print("entrada de juego",juego)
         for i in range(len(juego[0])):
             if juego[0][i]=="1":
                 jugador1[0]+=1
