@@ -1,4 +1,5 @@
 import random
+import getpass
 
 print(f"¡Bienvenidos!\n Las normas del juego son las siguientes: ") 
 print( " \t 1) Ninguna palabara puede exceder los 15 caracteres \n \t 2) En cada ronda, un jugador puede tratar de adivinar solo 1 palabra propuesta por el otro \n \t 3) Para adivinar cada palabra, se tendran 6 intentosque corresponden a ingresar 6 letras erroneas \n \t 4) Cuando la letra ingresada esta en la palabra, se debe mostrar en que posicón de la palabra se encuentra si la letra no esta, se agrega una parte de ahoracado")
@@ -28,7 +29,8 @@ def Juego(n1,n2):
         palabra=""
         descubrir=""
         while True:
-            palabra=input("\n Ingrese una palabra con más de 2 caracteres y menos de 15 caracteres: ").lower()
+            palabra=getpass.getpass("\n Ingrese una palabra con más de 2 caracteres y menos de 15 caracteres: ").lower()
+
             if len(palabra)<15 and len(palabra)>2:
                 for _ in range(len(palabra)):
                     descubrir+="_"
