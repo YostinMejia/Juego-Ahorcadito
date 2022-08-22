@@ -2,7 +2,7 @@ import random
 import getpass
 
 print(f"¡Bienvenidos!\n Las normas del juego son las siguientes: ") 
-print( " \t 1) Ninguna palabara puede exceder los 15 caracteres \n \t 2) En cada ronda, un jugador puede tratar de adivinar solo 1 palabra propuesta por el otro \n \t 3) Para adivinar cada palabra, se tendran 6 intentosque corresponden a ingresar 6 letras erroneas \n \t 4) Cuando la letra ingresada esta en la palabra, se debe mostrar en que posicón de la palabra se encuentra si la letra no esta, se agrega una parte de ahoracado")
+print( " \t 1) Ninguna palabara puede exceder los 15 caracteres. \n \t 2) En cada ronda, el jugador solo puede tratar de adivinar 1 palabra propuesta por el otro. \n \t 3) Para adivinar cada palabra, se tendrán 6 intentos, que corresponden a ingresar 6 letras erroneas. \n \t 4) Cuando la letra ingresada está en la palabra, se debe mostrar en qué posicón de la palabra se encuentra. Si la letra no está, se agrega una parte al cuerpo de ahorcado.")
 
 #Creamos el juego
 def Juego(n1,n2): 
@@ -19,17 +19,17 @@ def Juego(n1,n2):
         #El jugador escoge la palabra para su adversario
         print()
         if p==0:
-            print(n2,f"¿cual palabra quiere que ",n1," adivine?")
+            print(n2,f"¿Cuál palabra quiere que ",n1," adivine?")
             player=jugador1
         else:
-            print(n1,f"¿cual palabra quiere que ",n2," adivine?")
+            print(n1,f"¿Cuál palabra quiere que ",n2," adivine?")
             player=jugador2
 
         #Ingresa la palabara con cantidad de caracteres especificos
         palabra=""
         descubrir=""
         while True:
-            palabra=getpass.getpass("\n Ingrese una palabra con más de 2 caracteres y menos de 15 caracteres: ").lower()
+            palabra=getpass.getpass("\n Ingrese una palabra que contenga entre 2 y 15 caracteres ").lower()
 
             if len(palabra)<15 and len(palabra)>2:
                 for _ in range(len(palabra)):
@@ -41,7 +41,7 @@ def Juego(n1,n2):
         #Empiezan los intentos
         intentos=0
         print("Comience a adivinar, ¡Buena suerte!")
-        print("\nSi desea ayuda, esta consiste en que el juego pone una letra correcta de manera aleatoria, en el momento en el que le aparezca 'Digite la letra' ingrese 'ayuda' ")
+        print("\nSi desea ayuda, digite la palabra 'ayuda' cuando en el juego diga 'Digite la letra' y el juego pondrá de manera aleatoria una letra de la palabra que se está adivinando")
 
         while intentos<7:
 
@@ -61,7 +61,7 @@ def Juego(n1,n2):
                                 temp[j]=letra
                                 descubrir="".join(temp)
                                 print(descubrir)
-                        print("Lleva ",player[3]+1,f"asiertos correctos y {intentos} fallados")
+                        print("Lleva ",player[3]+1,f"asiertos y {intentos} intentos fallados")
                         player[3]+=1
 
                     else:
@@ -127,7 +127,7 @@ def Ganador(juego):
 again=""
 while again!="no":
     
-    modalidad=input("\nPara determinar la duración del juego: \n \t opcion #1-se puede pactar un número de rondas desde el principio \n \t opcion #2-Al final de cada ronda puede decidir si quiere continuar o terminar el juego \n\nDigite 1 para elegir la opcion#1 o 2 para elegir la opcion#2: ")
+    modalidad=input("\nPara determinar la duración del juego: \n \t Opción #1-se puede pactar un número de rondas desde el principio \n \t Opción #2-Al final de cada ronda puede decidir si quiere continuar o terminar el juego \n\nDigite 1 para elegir la opción#1 o 2 para elegir la opción#2: ")
     n1=input("\nPrimero ingrese el nombre de quien desea comenzar adivinando: ")
     n2=input("Nombre del jugador #2: ")
     jugador1=[0,0]
@@ -137,7 +137,7 @@ while again!="no":
     if modalidad=="1":
 
         #Ejecutamos las rondas ingresadas por el cliente
-        for i in range(int(input("\nDigite el numero de rondas que desean jugar: "))):
+        for i in range(int(input("\nDigite el número de rondas que desean jugar: "))):
             juego=Juego(n1,n2)
             temp=Ganador(juego)
             partida+=1
@@ -169,6 +169,6 @@ while again!="no":
             stop=input("¿Desea detener el juego? \n ingrese si o no:").lower()
 
     else:
-        print("Deje de ser bobo y digite una opcion valida")
+        print("Deje de ser bobo y digite una opción valida")
 
-    again=input("El juego termino \n¿Desea intentarlo de nuevo? ingrese si o no: ")
+    again=input("El juego terminó \n¿Desea intentarlo de nuevo? ingrese si o no: ")
