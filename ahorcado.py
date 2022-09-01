@@ -1,3 +1,4 @@
+import re
 import random
 import getpass
 
@@ -41,7 +42,7 @@ def Juego(n1,n2):
         #Empiezan los intentos
         intentos=0
         print("Comience a adivinar, ¡Buena suerte!")
-        print("\nSi desea ayuda, digite la palabra 'ayuda' cuando en el juego diga 'Digite la letra' y el juego pondrá de manera aleatoria una letra de la palabra que se está adivinando")
+        print("\nSi desea ayuda, digite la palabra 'ayuda' cuando en el juego diga 'Digite la letra' \ny el juego pondrá de manera aleatoria una letra de la palabra que se está adivinando")
 
         while intentos<7:
 
@@ -60,9 +61,10 @@ def Juego(n1,n2):
                                 temp=list(descubrir)
                                 temp[j]=letra
                                 descubrir="".join(temp)
-                                print(descubrir)
+                                print(descubrir)        
                         print("Lleva ",player[3]+1,f"asiertos y {intentos} intentos fallados")
-                        player[3]+=1
+                        if letra not in descubrir: #Se controla que no sume aciertos si digita una letra que ya adivino
+                            player[3]+=1
 
                     else:
                         intentos+=1
@@ -137,7 +139,16 @@ while again!="no":
     if modalidad=="1":
 
         #Ejecutamos las rondas ingresadas por el cliente
-        for i in range(int(input("\nDigite el número de rondas que desean jugar: "))):
+        rondas=input("¿Cuantas rondas desea jugar?")
+        while True:
+            x=re.findall("[a-zA-Z]",rondas)
+            if x==[]:
+                break
+            else:
+                print("Digite un número valido")
+                rondas=input("¿Cuantas rondas desea jugar?")
+        rondas=int(rondas)
+        for i in range(rondas):
             juego=Juego(n1,n2)
             temp=Ganador(juego)
             partida+=1
@@ -169,6 +180,6 @@ while again!="no":
             stop=input("¿Desea detener el juego? \n ingrese si o no:").lower()
 
     else:
-        print("Deje de ser bobo y digite una opción valida")
+        print("Deje de ser bobo y digite un modo valido")
 
     again=input("El juego terminó \n¿Desea intentarlo de nuevo? ingrese si o no: ")
