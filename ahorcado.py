@@ -63,8 +63,7 @@ def Juego(n1,n2):
                                 descubrir="".join(temp)
                                 print(descubrir)        
                         print("Lleva ",player[3]+1,f"asiertos y {intentos} intentos fallados")
-                        if letra not in descubrir: #Se controla que no sume aciertos si digita una letra que ya adivino
-                            player[3]+=1
+                        player[3]+=1
 
                     else:
                         intentos+=1
